@@ -23,7 +23,7 @@ function AuthLogin() {
           <Link
             className="font-medium ml-2 text-primary hover:underline"
             to="/auth/register"
-          >
+          >git 
             Register here
           </Link>
         </p>
