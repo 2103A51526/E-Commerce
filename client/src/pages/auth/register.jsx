@@ -1,20 +1,34 @@
 import CommonForm from "@/components/common/form";
 import { registerFormControls } from "@/config";
+import { useToast } from "@/hooks/use-toast";
+import { registerUser } from "@/store/auth-slice";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 function AuthRegister() {
-    const initialState = {
-        userName: '',
-        email: '',
-        password: ''
-    }
-    const [formData, setFormData] = useState(initialState)
+  const initialState = {
+    userName: '',
+    email: '',
+    password: ''
+  };
+  
+  const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const  {toast}  = useToast()
 
-    function onSubmit(){
-        
-    }
-
+  function onSubmit(event) {
+    event.preventDefault();
+    dispatch(registerUser(formData)).then((data) => {
+      if(data?.payload?.success) 
+        toast({
+            title:data.payload?.message
+        })
+        navigate('/auth/login')
+      console.log(data);
+    });
+  }
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div>
@@ -32,15 +46,14 @@ function AuthRegister() {
         </p>
       </div>
       <CommonForm 
-      formControls={registerFormControls}
-      buttonText={'Sign Up'}
-      formData={formData}
-      setFormData={setFormData}
-      onSubmit={onSubmit}
-      
+        formControls={registerFormControls}
+        buttonText="Sign Up"
+        formData={formData}
+        setFormData={setFormData}
+        onSubmit={onSubmit}
       />
     </div>
   );
 }
-
 export default AuthRegister;
+

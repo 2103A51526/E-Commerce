@@ -1,5 +1,5 @@
 import CommonForm from "@/components/common/form";
-import { loginFormControls, registerFormControls } from "@/config";
+import { loginFormControls } from "@/config";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -16,21 +16,21 @@ function AuthLogin() {
     <div className="mx-auto w-full max-w-md space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Sign in
+          Login to your account
         </h1>
         <p className="mt-2">
-          Already have an Account{" "}
+        Don't have an account {" "}
           <Link
             className="font-medium ml-2 text-primary hover:underline"
-            to="/auth/login"
+            to="/auth/register"
           >
-            Login
+            Register here
           </Link>
         </p>
       </div>
       <CommonForm
         formControls={loginFormControls}
-        buttonText={"Sign Up"}
+        buttonText={"Sign In"}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}
