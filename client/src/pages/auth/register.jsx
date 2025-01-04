@@ -12,7 +12,6 @@ function AuthRegister() {
     email: '',
     password: ''
   };
-  
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,14 +20,20 @@ function AuthRegister() {
   function onSubmit(event) {
     event.preventDefault();
     dispatch(registerUser(formData)).then((data) => {
-      if(data?.payload?.success) 
+      if (data?.payload?.success) {
         toast({
-            title:data.payload?.message
-        })
-        navigate('/auth/login')
-      console.log(data);
+          title: data?.payload?.message,
+        });
+        navigate("/auth/login");
+      } else {
+        toast({
+          title: data?.payload?.message,
+        });
+      }
     });
   }
+
+  console.log(formData);
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div>
@@ -56,4 +61,3 @@ function AuthRegister() {
   );
 }
 export default AuthRegister;
-

@@ -3,7 +3,7 @@ import React from 'react'
 function AdminOrder() {
   return (
     <div>
-      <h1>order</h1>
+      <h1> Admin Order</h1>
     </div>
   )
 }

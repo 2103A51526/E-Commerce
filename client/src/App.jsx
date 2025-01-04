@@ -11,16 +11,35 @@ import ShoppingCheckout from "./pages/shopping-view/checkout";
 import ShoppingListing from "./pages/shopping-view/listing";
 import ShoppingAccount from "./pages/shopping-view/account";
 import NotFound from "./pages/not-found";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CheckAuth from "./components/common/check-auth";
+import { useEffect } from "react";
+import { checkAuth } from "./store/auth-slice";
+import { Skeleton } from "@/components/ui/skeleton"
+import AdminOrder from "./pages/admin-view/order";
+import AdminProduct from "./pages/admin-view/product";
+
 
 function App() {
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { user, isAuthenticated, isLoading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuth()); 
+  }, [dispatch]);
+
+  if (isLoading) {
+    <Skeleton className="w-[100px] h-[20px] rounded-full bg-black" />
+
+  }
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
+        {/* Default route */}
         <Route path="/" element={<Navigate to="/auth/login" />} />
+
+        {/* Authentication routes */}
         <Route
           path="/auth"
           element={
@@ -32,6 +51,8 @@ function App() {
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
         </Route>
+
+        {/* Admin routes */}
         <Route
           path="/admin"
           element={
@@ -42,7 +63,11 @@ function App() {
         >
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="features" element={<AdminFeatures />} />
+          <Route path="products" element={<AdminProduct />} />
+          <Route path="orders" element={<AdminOrder />} />
         </Route>
+
+        {/* Shopping routes */}
         <Route
           path="/shop"
           element={
@@ -56,6 +81,8 @@ function App() {
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
         </Route>
+
+        {/* Catch-all route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
@@ -63,4 +90,6 @@ function App() {
 }
 
 export default App;
+
+
 

@@ -2,9 +2,8 @@
 function AdminDashboard() {
   return (
     <div>
-      <h1>ram</h1>
+      <h1>Admin Dashboard</h1>
     </div>
   )
 }
-
 export default AdminDashboard

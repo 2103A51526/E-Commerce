@@ -1,63 +1,53 @@
-// import CommonForm from "@/components/common/form";
-// import { useToast } from "@/components/ui/use-toast";
-// import { loginFormControls } from "@/config";
-// import { loginUser } from "@/store/auth-slice";
-// import { useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
+import { Card, CardContent, CardFooter } from "../ui/card";
 
-// const initialState = {
-//   email: "",
-//   password: "",
-// };
+function AdminProductTile({
+  product,
+  setFormData,
+  setOpenCreateProductsDialog,
+  setCurrentEditedId,
+  handleDelete,
+}) {
+  return (
+    <Card className="w-full max-w-sm mx-auto">
+      <div>
+        <div className="relative">
+          <img
+            src={product?.image}
+            alt={product?.title}
+            className="w-full h-[300px] object-cover rounded-t-lg"
+          />
+        </div>
+        <CardContent>
+          <h2 className="text-xl font-bold mb-2 mt-2">{product?.title}</h2>
+          <div className="flex justify-between items-center mb-2">
+            <span
+              className={`${
+                product?.salePrice > 0 ? "line-through" : ""
+              } text-lg font-semibold text-primary`}
+            >
+              ${product?.price}
+            </span>
+            {product?.salePrice > 0 ? (
+              <span className="text-lg font-bold">${product?.salePrice}</span>
+            ) : null}
+          </div>
+        </CardContent>
+        <CardFooter className="flex justify-between items-center">
+          <Button
+            onClick={() => {
+              setOpenCreateProductsDialog(true);
+              setCurrentEditedId(product?._id);
+              setFormData(product);
+            }}
+          >
+            Edit
+          </Button>
+          <Button onClick={() => handleDelete(product?._id)}>Delete</Button>
+        </CardFooter>
+      </div>
+    </Card>
+  );
+}
 
-// function AuthLogin() {
-//   const [formData, setFormData] = useState(initialState);
-//   const dispatch = useDispatch();
-//   const { toast } = useToast();
-
-//   function onSubmit(event) {
-//     event.preventDefault();
-
-//     dispatch(loginUser(formData)).then((data) => {
-//       if (data?.payload?.success) {
-//         toast({
-//           title: data?.payload?.message,
-//         });
-//       } else {
-//         toast({
-//           title: data?.payload?.message,
-//           variant: "destructive",
-//         });
-//       }
-//     });
-//   }
-
-//   return (
-//     <div className="mx-auto w-full max-w-md space-y-6">
-//       <div className="text-center">
-//         <h1 className="text-3xl font-bold tracking-tight text-foreground">
-//           Sign in to your account
-//         </h1>
-//         <p className="mt-2">
-//           Don't have an account
-//           <Link
-//             className="font-medium ml-2 text-primary hover:underline"
-//             to="/auth/register"
-//           >
-//             Register
-//           </Link>
-//         </p>
-//       </div>
-//       <CommonForm
-//         formControls={loginFormControls}
-//         buttonText={"Sign In"}
-//         formData={formData}
-//         setFormData={setFormData}
-//         onSubmit={onSubmit}
-//       />
-//     </div>
-//   );
-// }
-
-// export default AuthLogin;
+export default AdminProductTile;
