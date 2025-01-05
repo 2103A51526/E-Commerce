@@ -1,4 +1,3 @@
-
 import { Outlet } from "react-router-dom";
 import AdminSideBar from "./sidebar";
 import AdminHeader from "./header";

@@ -1,21 +1,22 @@
 import CommonForm from "@/components/common/form";
+import { useToast } from "@/components/ui/use-toast";
 import { registerFormControls } from "@/config";
-import { useToast } from "@/hooks/use-toast";
 import { registerUser } from "@/store/auth-slice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
+const initialState = {
+  userName: "",
+  email: "",
+  password: "",
+};
+
 function AuthRegister() {
-  const initialState = {
-    userName: '',
-    email: '',
-    password: ''
-  };
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const  {toast}  = useToast()
+  const { toast } = useToast();
 
   function onSubmit(event) {
     event.preventDefault();
@@ -28,20 +29,22 @@ function AuthRegister() {
       } else {
         toast({
           title: data?.payload?.message,
+          variant: "destructive",
         });
       }
     });
   }
 
   console.log(formData);
+
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
-      <div>
+      <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Create New Account
+          Create new account
         </h1>
         <p className="mt-2">
-          Already have an Account{" "}
+          Already have an account
           <Link
             className="font-medium ml-2 text-primary hover:underline"
             to="/auth/login"
@@ -50,9 +53,9 @@ function AuthRegister() {
           </Link>
         </p>
       </div>
-      <CommonForm 
+      <CommonForm
         formControls={registerFormControls}
-        buttonText="Sign Up"
+        buttonText={"Sign Up"}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}
@@ -60,4 +63,5 @@ function AuthRegister() {
     </div>
   );
 }
+
 export default AuthRegister;
