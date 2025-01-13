@@ -30,4 +30,3 @@ function AdminHeader({ setOpen }) {
 }
 
 export default AdminHeader;
-
